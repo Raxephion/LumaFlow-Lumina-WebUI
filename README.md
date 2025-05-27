@@ -1,4 +1,4 @@
-# CipherCore-Lumina-Image2.0-webUI - a highly optimised Lumina Image2.0 gradio web app for low VRAM systems (6GB+)
+# LumaFlow-Lumina-WebUI - a highly optimised Lumina Image2.0 gradio web app for low VRAM systems (6GB+)
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) <!-- Assuming you'll keep the Apache 2.0 license -->
 
@@ -38,7 +38,7 @@ Think of it as your local, friendly interface to a rather smart image model, des
 This is the easy route for Windows users!
 
 1.  **Download the App:**
-    *   Go to the GitHub repository page: https://github.com/Raxephion/LumaFlow.git
+    *   Go to the GitHub repository page: https://github.com/Raxephion/LumaFlow-Lumina-WebUI
     *   Click the green "<> Code" button, then "Download ZIP".
     *   Extract the downloaded ZIP file to a folder on your computer (e.g., `C:\LuminaApp`).
 
