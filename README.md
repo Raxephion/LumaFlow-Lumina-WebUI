@@ -1,8 +1,8 @@
-# Lumina Image 2.0 Local ✨ - Easy Peasy Image Gen!
+# CipherCore-Lumina-Image2.0-webUI - a highly optimised Lumina Image2.0 gradio web app for low VRAM systems (6GB+)
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) <!-- Assuming you'll keep the Apache 2.0 license -->
 
-Welcome! This little app lets you harness the power of **Lumina Image 2.0 (Next-VQ)** for your text-to-image creations, right on your own computer. It's designed to be super easy to get started, especially if you're not a fan of complicated setups.
+Welcome! This little app lets you harness the power of **Lumina Image 2.0** for your text-to-image creations, right on your own computer. It's designed to be super easy to get started, especially if you're not a fan of complicated setups.
 
 Think of it as your local, friendly interface to a rather smart image model, designed to be (relatively) kind to your GPU.
 
