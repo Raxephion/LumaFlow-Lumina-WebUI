@@ -38,7 +38,7 @@ Think of it as your local, friendly interface to a rather smart image model, des
 This is the easy route for Windows users!
 
 1.  **Download the App:**
-    *   Go to the GitHub repository page: `https://github.com/Raxephion/LumaFlow.git` 
+    *   Go to the GitHub repository page: `(https://github.com/Raxephion/LumaFlow.git)` 
     *   Click the green "<> Code" button, then "Download ZIP".
     *   Extract the downloaded ZIP file to a folder on your computer (e.g., `C:\LuminaApp`).
 
