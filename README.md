@@ -1,3 +1,6 @@
+# APP IS STILL IN VERY EARLY DEVELOPMENT - IF IT RUNS, I'LL BE FOXED!
+
+
 # LumaFlow-Lumina-WebUI - a highly optimised Lumina Image2.0 gradio web app for low VRAM systems (6GB+)
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) <!-- Assuming you'll keep the Apache 2.0 license -->
