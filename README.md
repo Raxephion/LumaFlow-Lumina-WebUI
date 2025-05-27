@@ -27,7 +27,7 @@ Think of it as your local, friendly interface to a rather smart image model, des
 
 ### Hardware:
 *   A **dedicated NVIDIA GPU** is strongly recommended (ideally with 6GB+ VRAM, though Lumina is a bit more forgiving than some giants).
-*   *CPU Mode?* Yes, it'll try, but expect it to be *very* slow. Like, "watch a whole season of a TV show while one image generates" slow.
+*   *CPU Mode?* Possible....but don't bother.
 
 ### Software:
 *   **Python** (version 3.9+ recommended). Get it from [python.org](https://www.python.org/downloads/) (tick "Add Python to PATH" on Windows).
@@ -38,7 +38,7 @@ Think of it as your local, friendly interface to a rather smart image model, des
 This is the easy route for Windows users!
 
 1.  **Download the App:**
-    *   Go to the GitHub repository page: `https://github.com/Raxephion/LuminaApp` (Replace `LuminaApp` with your actual Lumina app's repository name if different from the AuraFlow one you gave me)
+    *   Go to the GitHub repository page: `[https://github.com/Raxephion/LuminaApp](https://github.com/Raxephion/LumaFlow.git)` 
     *   Click the green "<> Code" button, then "Download ZIP".
     *   Extract the downloaded ZIP file to a folder on your computer (e.g., `C:\LuminaApp`).
 
