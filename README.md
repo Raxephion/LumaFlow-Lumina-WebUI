@@ -90,7 +90,7 @@ If you're on macOS/Linux, or prefer doing things step-by-step:
     ```
     Look for the `http://127.0.0.1:7860` URL in the terminal output and open it in your browser.
 
-## About Lumina Image 2.0 (Next-VQ)
+## About Lumina Image 2.0
 
 This app uses `Alpha-VLLM/Lumina-Image-2.0`. It's part of the Lumina family of models, which are "next-generation foundation models for text-to-image generation, text-to-video generation, and multi-modal language understanding."
 You can find more details on their [Hugging Face Hub page](https://huggingface.co/Alpha-VLLM/Lumina-Image-2.0).
@@ -107,3 +107,7 @@ You can find more details on their [Hugging Face Hub page](https://huggingface.c
 ## Disclaimer
 
 This is a user-friendly wrapper for a powerful model. Use it responsibly. Image quality and performance can vary. Have fun experimenting!
+
+## Thanks
+Mad respect to:
+🧠 QIN QI (ChinChyi) and stzhao (zhaoshitian) from Alpha-VLLM — your work is seriously inspiring and foundational to projects like this. You bring the sorcery, I bring the hype :)
