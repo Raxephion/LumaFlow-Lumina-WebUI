@@ -62,8 +62,8 @@ If you're on macOS/Linux, or prefer doing things step-by-step:
 1.  **Get the Code:**
     *   **With Git:**
         ```bash
-        git clone [https://github.com/Raxephion/LuminaApp.git ](https://github.com/Raxephion/LumaFlow.git)
-        cd LuminaLocalApp
+        git clone https://github.com/Raxephion/LumaFlow-Lumina-WebUI.git
+        cd LumaFlow-Lumina-WebUI
         ```
     *   **Download ZIP:** As described in Step 1 of the "Click-Click-Done" section, then navigate into the extracted folder with your terminal.
 
