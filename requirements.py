@@ -1,7 +1,4 @@
 diffusers
-torch
-torchvision
-torchaudio
 transformers
 accelerate
 gradio
