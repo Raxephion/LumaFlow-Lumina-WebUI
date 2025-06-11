@@ -1,7 +1,7 @@
 import os
 import uuid
 import gradio as gr
-from diffusers import LuminaNextVQPipeline # Using Lumina's specific pipeline
+from diffusers import Lumina2Pipeline # Using Lumina's specific pipeline (Corrected from LuminaNextVQPipeline based on previous fixes)
 import torch
 from PIL import Image
 from pathvalidate import sanitize_filename
@@ -43,7 +43,7 @@ else:
         except RuntimeError:
             print("CUDA device 1 also not available. Defaulting to 'cuda' (PyTorch will select one).")
             # selected_device remains "cuda"
-    
+
     DEVICE = selected_device
     TORCH_DTYPE = torch.float16 # Standard for modern CUDA GPUs with these models
     print(f"CUDA is available. Using device: {DEVICE} with dtype: {TORCH_DTYPE}")
@@ -66,12 +66,11 @@ def load_lumina_pipeline():
             pipeline_args = {
                 "cache_dir": MODEL_FOLDER,
                 "torch_dtype": TORCH_DTYPE,
-                # "variant": "fp16" # LuminaNextVQPipeline doesn't typically use 'variant' like SDXL.
-                                  # If needed, it would be included here. Test without first.
             }
 
-            pipeline = LuminaNextVQPipeline.from_pretrained(MODEL_NAME, **pipeline_args)
-            
+            # Use the corrected pipeline name based on our previous debugging
+            pipeline = Lumina2Pipeline.from_pretrained(MODEL_NAME, **pipeline_args)
+
             print("Enabling model CPU offload for potentially lower VRAM usage on CUDA device...")
             pipeline.enable_model_cpu_offload() # Offloads parts to CPU RAM, GPU for compute
             # For pure GPU (if enough VRAM): pipeline.to(DEVICE)
@@ -110,11 +109,7 @@ def generate_image(prompt: str, width: int, height: int, num_inference_steps: in
     status_message = "Generating..."
     try:
         print(f"Generating image with: Prompt='{prompt}', Seed={current_seed}, W={width}, H={height}, Steps={num_inference_steps}, CFG={guidance_scale}")
-        
-        # Ensure model is on the correct device before inference,
-        # especially if enable_model_cpu_offload() is used.
-        # The pipeline should handle this internally after offload is enabled.
-        
+
         pil_image = pipeline(
             prompt=prompt,
             width=width,
@@ -127,11 +122,11 @@ def generate_image(prompt: str, width: int, height: int, num_inference_steps: in
         safe_prompt_segment = sanitize_filename(prompt[:50] if prompt else "lumina_img")
         if not safe_prompt_segment.strip(): # Handle empty or whitespace-only prompts
             safe_prompt_segment = "lumina_img"
-        
+
         unique_id = str(uuid.uuid4())[:8]
         filename = f"{safe_prompt_segment}_{current_seed}_{unique_id}.png"
         filepath = os.path.join(OUTPUT_FOLDER, filename)
-        
+
         pil_image.save(filepath, 'PNG')
         status_message = f"Image saved: {filepath}"
         print(status_message)
@@ -174,93 +169,29 @@ elif DEVICE is None:
     model_load_error = "CUDA GPU not detected. Model cannot be loaded."
     print(model_load_error)
 
+# Use the Gradio Soft theme
+theme = gr.themes.Soft()
 
-# Using the dark theme from your AuraFlow example
-theme = gr.themes.Default().set(
-    body_background_fill="#121212",
-    body_text_color="#e0e0e0",
-    body_text_color_subdued="#b0b0b0",
-    block_background_fill="#1e1e1e",
-    block_border_width="1px",
-    block_border_color="#333333",
-    block_label_background_fill="#2c2c2c",
-    block_label_text_color="#e0e0e0",
-    block_title_text_color="#ffffff",
-    input_background_fill="#2c2c2c",
-    input_border_color="#444444",
-    button_primary_background_fill="#007bff", # Blue for primary
-    button_primary_text_color="#ffffff",
-    button_secondary_background_fill="#3a3a3a",
-    button_secondary_text_color="#e0e0e0",
-    slider_color="#007bff", # Blue for sliders
-    slider_color_dark="#0056b3",
-)
+# Custom CSS block is removed.
+# The `css` argument will be removed from `gr.Blocks()`
 
-css = """
-    body { color: #e0e0e0; } 
-    .gradio-container { background-color: #121212; }
-    .small-button { 
-        min-width: 0 !important; width: 3em; height: 3em; 
-        padding: 0.25em !important; line-height: 1; font-size: 1.2em; 
-        align-self: end; margin-left: 0.5em !important;
-    }
-    #seed_row .gr-form { display: flex; align-items: flex-end; }
-    #seed_row .gr-number { flex-grow: 1; }
-    .gr-group { 
-        border-radius: 12px !important; 
-        box-shadow: 0 4px 8px rgba(0,0,0,0.25) !important; 
-        background-color: #1e1e1e !important;
-        padding: 20px !important;
-        border: 1px solid #333333;
-    }
-    h1 { 
-        font-size: 2.5em !important; 
-        color: #00aeff !important; /* Light blue for main title */
-        text-align: center; margin-bottom: 0.5em !important; 
-    }
-    h3 { color: #c0c0c0 !important; } /* Lighter gray for subheadings */
-    .gr-markdown p { 
-        font-size: 1.1em; color: #b0b0b0;
-        text-align: center; margin-bottom: 1.5em; 
-    }
-    .gr-block-label { color: #e0e0e0 !important; }
-    input[type='text'], input[type='number'], textarea { 
-        color: #e0e0e0 !important; background-color: #2c2c2c !important; border-color: #444444 !important;
-    }
-    .gr-input { /* More targeted input styling */
-      color: #e0e0e0 !important; background-color: #2c2c2c !important; border-color: #444444 !important; 
-    }
-    .gr-slider label span { color: #e0e0e0 !important; }
-    .gr-checkbox-label span { color: #e0e0e0 !important; }
-    .gr-radio label span { color: #e0e0e0 !important; }
-    .gr-dropdown label span { color: #e0e0e0 !important; }
-    .gr-accordion summary { color: #c0c0c0 !important; }
-    .error { /* For gr.Error messages */
-        background-color: #4B0000 !important; /* Dark red background for errors */
-        color: #FFCCCC !important; /* Light pink/red text for errors */
-        border: 1px solid #990000 !important;
-        padding: 10px !important;
-        border-radius: 8px !important;
-    }
-"""
-
-with gr.Blocks(theme=theme, css=css) as demo:
+with gr.Blocks(theme=theme) as demo: # Removed css=css argument
     gr.Markdown("# Lumina Next-VQ ✨ Image Generation (GPU Only)") # Updated title
     gr.Markdown("Generate images with Lumina (Alpha-VLLM/Lumina-Image-2.0). Requires CUDA GPU. W/H should be multiples of 64.")
-    
+
     if model_load_error:
         gr.Error(f"Startup Error: {model_load_error}")
 
     with gr.Row():
         with gr.Column(scale=2, min_width=400):
-            with gr.Group():
+            with gr.Group(): # gr.Group will now be styled by the Soft theme
                 gr.Markdown("### 🎨 Generation Settings")
                 prompt_input = gr.Textbox(
                     label="Prompt",
                     placeholder="e.g., A majestic lion surveying its kingdom, photorealistic",
                     lines=3
                 )
-                
+
                 with gr.Row():
                     # Lumina likes total pixels around 1M (e.g., 1024x1024). Max ~1.5k for width/height.
                     width_slider = gr.Slider(label="Width (multiple of 64)", minimum=256, maximum=1536, value=1024, step=64)
@@ -270,17 +201,19 @@ with gr.Blocks(theme=theme, css=css) as demo:
                 steps_slider = gr.Slider(label="Inference Steps", minimum=10, maximum=100, value=50, step=1)
                 guidance_slider = gr.Slider(label="Guidance Scale (CFG)", minimum=1.0, maximum=20.0, value=7.5, step=0.1) # Lumina seems to work well with CFG 3-8
 
-                with gr.Row(elem_id="seed_row"):
+                with gr.Row(): # Removed elem_id="seed_row" as specific CSS targeting it is gone
                     seed_input = gr.Number(label="Seed (-1 for random)", value=-1, precision=0, interactive=True)
-                    random_seed_button = gr.Button("🎲", elem_classes="small-button", tooltip="Random Seed")
-                    reuse_seed_button = gr.Button("♻️", elem_classes="small-button", tooltip="Reuse Last Seed")
+                    # Removed elem_classes and tooltip as they were part of the custom CSS/newer Gradio features
+                    random_seed_button = gr.Button("🎲")
+                    reuse_seed_button = gr.Button("♻️")
 
-                generate_button = gr.Button("Generate Image", variant="primary", scale=2, interactive=(pipeline is not None)) # Disable if model not loaded
+
+                generate_button = gr.Button("Generate Image", variant="primary", scale=2, interactive=(pipeline is not None))
 
         with gr.Column(scale=3, min_width=500):
-            with gr.Group():
+            with gr.Group(): # gr.Group will now be styled by the Soft theme
                 gr.Markdown("### 🖼️ Generated Image")
-                output_image = gr.Image(label="Output", type="pil", interactive=False, show_download_button=True, show_share_button=False) # Share button can be tricky
+                output_image = gr.Image(label="Output", type="pil", interactive=False, show_download_button=True, show_share_button=False)
                 with gr.Accordion("Generation Details", open=False):
                     generated_seed_output = gr.Textbox(label="Used Seed", interactive=False)
                     status_output = gr.Textbox(label="Status / Filename", interactive=False, lines=2)
@@ -292,15 +225,15 @@ with gr.Blocks(theme=theme, css=css) as demo:
         api_name="generate_image"
     )
 
-    random_seed_button.click(fn=reset_seed_value, inputs=None, outputs=seed_input) # Fixed: inputs=None
-    reuse_seed_button.click(fn=reuse_last_seed_value, inputs=None, outputs=seed_input) # Fixed: inputs=None
+    random_seed_button.click(fn=reset_seed_value, inputs=None, outputs=seed_input)
+    reuse_seed_button.click(fn=reuse_last_seed_value, inputs=None, outputs=seed_input)
 
 # --- Launch ---
 if __name__ == "__main__":
     if DEVICE is None or not DEVICE.startswith("cuda"):
         print("\nApplication will launch, but image generation will be disabled due to no CUDA GPU.")
         print("Please ensure you have a compatible NVIDIA GPU and drivers installed.\n")
-    
+
     print("Launching Gradio Web UI...")
-    demo.queue(max_size=10, default_concurrency_limit=1) # Allow some queueing
-    demo.launch(debug=True, share=False) # share=True can be enabled if you want to share externally
+    demo.queue(max_size=10, default_concurrency_limit=1)
+    demo.launch(debug=True, share=False)
