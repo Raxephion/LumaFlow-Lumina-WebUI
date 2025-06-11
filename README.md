@@ -1,4 +1,4 @@
-# APP IS STILL IN VERY EARLY DEVELOPMENT - IF IT RUNS, I'LL BE FOXED!
+### 11/06/2025 - App runs, inference is very slow. Busy fixing
 
 
 # LumaFlow-Lumina-WebUI - a highly optimised Lumina Image2.0 gradio web app for low VRAM systems (6GB+)
