@@ -1,3 +1,5 @@
+
+### 01/08/2025 - App runs, inference is much faster and only 20 steps produces fantastic results. Still optimising
 ### 11/06/2025 - App runs, inference is very slow. Busy fixing
 
 ![LumaFlow-Lumina-WebUI Screenshot](https://raw.githubusercontent.com/Raxephion/LumaFlow-Lumina-WebUI/main/resources/appimage02.png)
