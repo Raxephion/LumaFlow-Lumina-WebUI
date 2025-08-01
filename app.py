@@ -176,7 +176,7 @@ theme = gr.themes.Soft()
 # The `css` argument will be removed from `gr.Blocks()`
 
 with gr.Blocks(theme=theme) as demo: # Removed css=css argument
-    gr.Markdown("# Lumina Next-VQ ✨ Image Generation (GPU Only)") # Updated title
+    gr.Markdown("# LumaFLow - Lumina Image 2.0 Offline Image Generation (GPU Only)") # Updated title
     gr.Markdown("Generate images with Lumina (Alpha-VLLM/Lumina-Image-2.0). Requires CUDA GPU. W/H should be multiples of 64.")
 
     if model_load_error:
