@@ -1,5 +1,6 @@
 ### 11/06/2025 - App runs, inference is very slow. Busy fixing
 
+![LumaFlow-Lumina-WebUI Screenshot](https://raw.githubusercontent.com/Raxephion/LumaFlow-Lumina-WebUI/main/resources/appimage02.png)
 
 # LumaFlow-Lumina-WebUI - a highly optimised Lumina Image2.0 gradio web app for low VRAM systems (6GB+)
 
